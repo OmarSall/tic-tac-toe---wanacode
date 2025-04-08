@@ -27,7 +27,7 @@ export function makeMove(index, symbol) {
 }
 
 export function getBoardState() {
-    return [...boardState]; // Return a copy
+    return [...boardState];
 }
 
 export function resetBoardState() {

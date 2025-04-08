@@ -19,14 +19,14 @@ function handleMove(index) {
         setTimeout(() => {
             alert(`${playersNames[activePlayer - 1]} wins!`);
             resetAndPrepareGame();
-        }, 500); // Wait before resetting the game
+        }, 500);
     } else if (!boardState.includes("")) {
         setTimeout(() => {
             alert("It\'s a draw!");
             resetAndPrepareGame();
         }, 500);
     } else {
-        activePlayer = 3 - activePlayer; // Switch player (1 to 2 or 2 to 1)
+        activePlayer = 3 - activePlayer;
         updateTurnInfo();
     }
 }
