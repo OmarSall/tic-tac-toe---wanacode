@@ -1,7 +1,7 @@
 export function drawWinningLine({ combination, player }) {
-    const cells = document.getElementsByClassName('cell');
-    const line = document.createElement('div');
-    line.classList.add('winning-line');
+    const cells = document.getElementsByClassName("cell");
+    const line = document.createElement("div");
+    line.classList.add("winning-line");
     const [a, b, c] = combination;
     const cellA = cells[a].getBoundingClientRect();
     const cellB = cells[b].getBoundingClientRect();
@@ -48,5 +48,5 @@ export function drawWinningLine({ combination, player }) {
     line.style.transform = transform || ''; // Apply rotation if it's diagonal
 
     // Append the line to the game screen container
-    document.getElementById('gameScreen').appendChild(line);
+    document.getElementById("gameScreen").appendChild(line);
 }

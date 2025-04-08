@@ -12,7 +12,7 @@ function handleMove(index) {
     }
     const symbol = activePlayer === 1 ? "O" : "X";
     const winner = makeMove(index, symbol);
-    document.getElementsByClassName('cell')[index].innerText = symbol;
+    document.getElementsByClassName("cell")[index].innerText = symbol;
 
     if (winner) {
         drawWinningLine(winner);
@@ -22,7 +22,7 @@ function handleMove(index) {
         }, 500); // Wait before resetting the game
     } else if (!boardState.includes("")) {
         setTimeout(() => {
-            alert('It\'s a draw!');
+            alert("It\'s a draw!");
             resetAndPrepareGame();
         }, 500);
     } else {
