@@ -27,7 +27,7 @@ function handleMove(index) {
         }, 500);
     } else {
         activePlayer = 3 - activePlayer;
-        updateTurnInfo();
+        updateTurnInfo(playersNames[activePlayer - 1]);
     }
 }
 
@@ -44,21 +44,20 @@ function resetAndPrepareGame() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".cell").forEach((cell, index) => {
-        cell.addEventListener("click", () => handleMove(index));
-    });
-
     document.getElementById("confirmButton").addEventListener("click", () => {
         const names = getPlayersNames();
         if (!names[0] || !names[1]) {
             alert("Please enter both player names!");
             return;
         }
-
-        playersNames = names;
         activePlayer = 1;
+        playersNames = names;
         showGameScreen();
         updateTurnInfo(playersNames[0]);
+    });
+
+    document.querySelectorAll(".cell").forEach((cell, index) => {
+        cell.addEventListener("click", () => handleMove(index));
     });
 
     document.getElementById("resetButton").addEventListener("click", () => {
