@@ -1,4 +1,4 @@
-import { makeMove, getBoardState, resetBoardState } from "./game.js"
+import { makeMove, getBoardState, resetBoardState, checkWinner } from "./game.js"
 import { showGameScreen, getPlayersNames, updateTurnInfo } from "./ui.js"
 import { drawWinningLine } from "./board.js"
 
@@ -11,8 +11,10 @@ function handleMove(index) {
         return;
     }
     const symbol = activePlayer === 1 ? "O" : "X";
-    const winner = makeMove(index, symbol);
+    makeMove(index, symbol);
     document.getElementsByClassName("cell")[index].innerText = symbol;
+
+    const winner = checkWinner();
 
     if (winner) {
         drawWinningLine(winner);

@@ -1,48 +1,65 @@
 export function drawWinningLine({ combination, player }) {
-    const cells = document.getElementsByClassName("cell");
-    const line = document.createElement("div");
-    line.classList.add("winning-line");
-    const [a, b, c] = combination;
-    const cellA = cells[a].getBoundingClientRect();
-    const cellB = cells[b].getBoundingClientRect();
-    const cellC = cells[c].getBoundingClientRect();
+    const allBoardCells = document.getElementsByClassName("cell");
+    const [firstMove, secondMove, thirdMove] = combination;
 
-    let left, top, width, height, transform;
+    const selectedCellRects  = getSelectedCellRects([firstMove, secondMove, thirdMove], allBoardCells);
+    const winningLineStyle = calculateWinningLineStyle(firstMove, secondMove, thirdMove, selectedCellRects);
 
-    if (a % 3 === b % 3 && b % 3 === c % 3) { // Vertical line
-        left = cellA.left + (cellA.width / 2) - 3; // Center of the column
-        top = cellA.top;
-        height = cellC.bottom - cellA.top;
-        width = 5; // Small width for vertical line
-    } 
-    else if (a === 0 && b === 4 && c === 8) { // Diagonal (top-left to bottom-right)
-        left = cellB.left + (cellB.width / 2) - 3;
-        top = (1/5)*cellA.top;
-        height = Math.sqrt(Math.pow(cellC.bottom - cellA.top, 2) + Math.pow(cellC.right - cellA.left, 2));
+    const winningLineElement  = createWinningLineElement(winningLineStyle);
+    document.getElementById("gameScreen").appendChild(winningLineElement);
+}
+
+function getSelectedCellRects(indices, cells) {
+    return indices.map(index => cells[index].getBoundingClientRect());
+}
+
+function calculateWinningLineStyle(firstMove, secondMove, thirdMove, [firstWinCell, secondWinCell, thirdWinCell]) {
+    let xPosition, yPosition, lineWidth, lineHeight, transform;
+
+    const isVertical = firstMove % 3 === secondMove % 3 && secondMove % 3 === thirdMove % 3;
+    const isDiagonalLeftTopRightBottom = firstMove === 0 && secondMove === 4 && thirdMove === 8;
+    const isDiagonalRightTopLeftBottom = firstMove === 2 && secondMove === 4 && thirdMove === 6;
+
+    if (isVertical) {
+        xPosition = firstWinCell.left + (firstWinCell.width / 2) - 3;
+        yPosition = firstWinCell.top;
+        lineWidth = 5;
+        lineHeight = thirdWinCell.bottom - firstWinCell.top;
+    } else if (isDiagonalLeftTopRightBottom) {
+        xPosition = secondWinCell.left + (secondWinCell.width / 2) - 3;
+        yPosition = 0.2 * firstWinCell.top;
+        lineWidth = 5;
+        lineHeight = Math.hypot(thirdWinCell.bottom - firstWinCell.top, thirdWinCell.right - firstWinCell.left);
         transform = "rotate(-45deg)";
-        width = 5;
-    }
-    else if (a === 2 && b === 4 && c === 6) { // Diagonal (top-right to bottom-left)
-        left = cellB.left + (cellB.width / 2) - 3;
-        top = (1/5)*cellA.top;
-        height = Math.sqrt(Math.pow(cellC.bottom - cellA.top, 2) + Math.pow(cellA.right - cellC.left, 2));
+    } else if (isDiagonalRightTopLeftBottom) {
+        xPosition = secondWinCell.left + (secondWinCell.width / 2) - 3;
+        yPosition  = 0.2 * firstWinCell.top;
+        lineWidth = 5;
+        lineHeight = Math.hypot(thirdWinCell.bottom - firstWinCell.top, firstWinCell.right - thirdWinCell.left);
         transform = "rotate(45deg)";
-        width = 5;
-    }
-    else {
-        left = cellA.left;
-        width = cellC.right - cellA.left;
-        top = cellA.top + (cellA.height / 2) - 3;
-        height = 5;
+    } else {
+        // Horizontal
+        xPosition = firstWinCell.left;
+        yPosition  = firstWinCell.top + (firstWinCell.height / 2) - 3;
+        lineWidth = thirdWinCell.right - firstWinCell.left;
+        lineHeight = 5;
     }
 
-    // Set the line properties
-    line.style.left = `${left}px`;
-    line.style.top = `${top}px`;
-    line.style.width = `${width}px`;
-    line.style.height = `${height}px`;
-    line.style.transform = transform || "";
+    return { xPosition, yPosition, lineWidth, lineHeight, transform };
+}
 
-    
-    document.getElementById("gameScreen").appendChild(line);
+function createWinningLineElement({ xPosition, yPosition, lineWidth, lineHeight, transform = "" }) {
+    const winningLine = document.createElement("div");
+    winningLine.classList.add("winning-line");
+    Object.assign(winningLine.style, {
+        position: "absolute",
+        backgroundColor: "red",
+        left: `${xPosition}px`,
+        top: `${yPosition}px`,
+        width: `${lineWidth}px`,
+        height: `${lineHeight}px`,
+        transform,
+        zIndex: 10,
+    });
+    return winningLine;
 }

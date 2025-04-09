@@ -9,9 +9,9 @@ export function checkWinner() {
     ];
 
     for (let combination of winningCombinations) {
-        const [a, b, c] = combination;
-        if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
-            return { combination, player: boardState[a] };
+        const [firstCell, secondCell, thirdCell] = combination;
+        if (boardState[firstCell] && boardState[firstCell] === boardState[secondCell] && boardState[firstCell] === boardState[thirdCell]) {
+            return { combination, player: boardState[firstCell] };
         }
     }
     return null;
@@ -21,13 +21,11 @@ export function makeMove(index, symbol) {
     if (boardState[index]) {
         return;
     }
-
-    boardState[index] = symbol;
-    return checkWinner();
+    return boardState[index] = symbol;
 }
 
 export function getBoardState() {
-    return [...boardState];
+    return boardState;
 }
 
 export function resetBoardState() {
