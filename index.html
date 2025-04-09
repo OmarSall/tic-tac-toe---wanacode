@@ -7,27 +7,27 @@
 </head>
 <body>
     <div class="input-screen" id="inputScreen">
-        <h2>Enter Player Names</h2>
+        <h2>Enter Players Names</h2>
         <input type="text" id="firstPlayer" placeholder="First Player's Name" required>
         <input type="text" id="secondPlayer" placeholder="Second Player's Name" required>
-        <button onclick="startGame()">Confirm</button>
+        <button id="confirmButton">Confirm</button>
     </div>
-    <div class="game-screen" id="gameScreen" style="display:none;">
+    <div class="game-screen" id="gameScreen" style="display: none;">
         <h2 id="turnInfo">It's Player 1's turn</h2>
         <div class="board" id="board">
-            <div class="cell" onclick="makeMove(0)"></div>
-            <div class="cell" onclick="makeMove(1)"></div>
-            <div class="cell" onclick="makeMove(2)"></div>
-            <div class="cell" onclick="makeMove(3)"></div>
-            <div class="cell" onclick="makeMove(4)"></div>
-            <div class="cell" onclick="makeMove(5)"></div>
-            <div class="cell" onclick="makeMove(6)"></div>
-            <div class="cell" onclick="makeMove(7)"></div>
-            <div class="cell" onclick="makeMove(8)"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
         </div>
-        <button onclick="resetGame()">Reset Game</button>
+        <button id="resetButton">Reset Game</button>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
