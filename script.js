@@ -3,6 +3,7 @@ import { showGameScreen, getPlayersNames, updateTurnInfo } from "./ui.js"
 import { drawWinningLine } from "./board.js"
 
 let playersNames = ["", ""];
+
 let activePlayer = 1;
 
 function handleMove(index) {
